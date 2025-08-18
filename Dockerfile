@@ -53,7 +53,8 @@ RUN rm -f index.html \
  && mkdir -p filestore \
  && chmod 777 filestore \
  && chmod -R 777 include/
- 
+
+ADD config.php /var/www/html/include/config.php
 
 # Copy custom entrypoint script
 COPY entrypoint.sh /entrypoint.sh
