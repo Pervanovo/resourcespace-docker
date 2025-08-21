@@ -13,6 +13,8 @@ $mysql_username = getenv('MYSQL_USER');
 $mysql_password = getenv('MYSQL_PASSWORD');
 $mysql_db = getenv('MYSQL_DB') ?: 'resourcespace';
 
+$mysql_bin_path = '/usr/bin';
+
 # Base URL of the installation
 $baseurl = getenv('BASEURL') ?: 'http://localhost';
 
@@ -46,7 +48,7 @@ $antiword_path = '/usr/bin';
 $pdftotext_path = '/usr/bin';
 
 $applicationname = getenv('APP_NAME') ?: 'ResourceSpace';
-$homeanim_folder = 'filestore/system/slideshow_e0fc2cd9adce998';
+$homeanim_folder = 'filestore/system/slideshow';
 
 /*
 
