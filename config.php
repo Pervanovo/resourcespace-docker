@@ -101,5 +101,8 @@ $hide_real_filepath = true;
 $plugins[] = "brand_guidelines";
 
 # Custom config
-$allowed_external_share_groups = [8];
+if (getenv('ALLOWED_EXTERNAL_SHARE_GROUPS')) {
+    $allowed_external_share_groups = explode(",", getenv('ALLOWED_EXTERNAL_SHARE_GROUPS'));
+    print_r($allowed_external_share_groups);
+}
 $relate_on_upload = true;
