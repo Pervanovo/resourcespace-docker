@@ -20,10 +20,8 @@ RUN apk add --no-cache \
     mysql-client \
     exiftool \
     ffmpeg \
-    opencv-dev \
     python3 \
-    py3-pip \
-    py3-opencv
+    py3-pip
 #perl-image-exiftool
 RUN apk add --no-cache \
     php83 \
