@@ -103,6 +103,11 @@ $plugins[] = "brand_guidelines";
 # Custom config
 if (getenv('ALLOWED_EXTERNAL_SHARE_GROUPS')) {
     $allowed_external_share_groups = explode(",", getenv('ALLOWED_EXTERNAL_SHARE_GROUPS'));
-    print_r($allowed_external_share_groups);
 }
 $relate_on_upload = true;
+//if (getenv('DEBUG')) {
+    $show_detailed_errors = true;
+    $debug_extended_info = true;
+    $debug_log = true;
+    $debug_log_location = "/var/log/apache2/error.log";
+//}
