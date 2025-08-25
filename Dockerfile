@@ -41,6 +41,11 @@ RUN apk add --no-cache \
     php83-dom \
     php83-xml
 
+RUN apk --no-cache add shadow && \
+    groupmod --gid 33 www-data && \
+    usermod --uid 33 --gid 33 apache && \
+    apk del shadow
+
 WORKDIR /var/www/html
 
 RUN rm -f index.html \
@@ -48,6 +53,8 @@ RUN rm -f index.html \
  && mkdir -p filestore \
  && chmod 777 filestore \
  && chmod -R 777 include/
+
+RUN chown -R apache:apache /var/www/html
 
 RUN sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 100M/g" /etc/php83/php.ini \
  && sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 100M/g" /etc/php83/php.ini \
