@@ -23,4 +23,6 @@ Optional:
 * `SMTP_SECURE`
 * `SMTP_USERNAME`
 * `SMTP_PASSWORD`
-* `ALLOWED_EXTERNAL_SHARE_GROUPS` example: 1,8
+* `ALLOWED_EXTERNAL_SHARE_GROUPS` example: `"1,8"`
+* `UPPY_COMPANION_URL` url to companion service
+* `UPPY_PLUGINS` example: `"GoogleDrive,Url"`

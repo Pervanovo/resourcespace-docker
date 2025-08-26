@@ -111,3 +111,13 @@ if (getenv('DEBUG')) {
     $debug_log = true;
     $debug_log_location = "/var/log/apache2/error.log";
 }
+
+if (getenv('UPPY_COMPANION_URL')) {
+    $uppy_companion_url = getenv('UPPY_COMPANION_URL');
+    if (getenv('UPPY_PLUGINS')) {
+        $uppyPlugins = explode(",", getenv('UPPY_PLUGINS'));
+        foreach ($uppyPlugins as $uppyPlugin) {
+            $uploader_plugins[] = $uppyPlugin;
+        }
+    }
+}
