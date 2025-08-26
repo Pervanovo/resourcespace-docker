@@ -17,6 +17,17 @@ services:
       - localhost.env
       - db.env
 
+  companion:
+    image: transloadit/companion:4.15.1
+    container_name: companion
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    network_mode: "host"
+    env_file:
+      - companion.env
+      - companionSecrets.env
+
   mariadb:
     image: mariadb
     container_name: mariadb
@@ -34,5 +45,4 @@ networks:
 
 volumes:
   mariadb:
-  include:
   filestore:
