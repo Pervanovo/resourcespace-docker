@@ -30,6 +30,7 @@ RUN apk add --no-cache \
     php83-dev \
     php83-gd \
     php83-intl \
+    php83-iconv \
     php83-mysqlnd \
     php83-mysqli \
     php83-mbstring \
