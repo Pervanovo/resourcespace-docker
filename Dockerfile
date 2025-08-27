@@ -30,7 +30,6 @@ RUN apk add --no-cache \
     php83-dev \
     php83-gd \
     php83-intl \
-    php83-iconv \
     php83-mysqlnd \
     php83-mysqli \
     php83-mbstring \
@@ -38,11 +37,11 @@ RUN apk add --no-cache \
     php83-apache2 \
     php83-ctype \
     php83-dom \
-    php83-xml
+    php83-xml \
+    php83-iconv
 
-# fix work iconv library with alphine
-RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted gnu-libiconv
-ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
+RUN apk add gnu-libiconv=1.15-r3 --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.13/community/ --allow-untrusted
+ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so
 
 RUN apk --no-cache add shadow && \
     groupmod --gid 33 www-data && \
