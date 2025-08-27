@@ -40,6 +40,10 @@ RUN apk add --no-cache \
     php83-dom \
     php83-xml
 
+# fix work iconv library with alphine
+RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted gnu-libiconv
+ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
+
 RUN apk --no-cache add shadow && \
     groupmod --gid 33 www-data && \
     usermod --uid 33 --gid 33 apache && \
