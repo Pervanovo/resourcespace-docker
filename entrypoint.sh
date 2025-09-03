@@ -32,4 +32,9 @@ sed -i -e "s/MaxRequestWorkers\s\+\d\+/MaxRequestWorkers ${MAX_RW}/g" /etc/apach
 
 cat /etc/apache2/conf.d/mpm.conf
 
+if [[ ! -z "${ULIMIT}" ]]; then
+  ulimit -m ${ULIMIT}
+  ulimit -a
+fi
+
 httpd -DFOREGROUND
