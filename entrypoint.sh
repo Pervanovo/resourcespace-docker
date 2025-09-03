@@ -7,8 +7,10 @@ rc-service crond start
 #apachectl -D FOREGROUND
 
 mkdir -p /var/www/html/filestore/system/slideshow
-chmod 777 /var/www/html/filestore/system/slideshow
+chown -R apache:apache /var/www/html/filestore/system
+chmod -R 777 /var/www/html/filestore/system
 cp /tmp/1.jpg /var/www/html/filestore/system/slideshow
+chown apache:apache /var/www/html/filestore/system/slideshow/1.jpg
 
 #<IfModule mpm_prefork_module>
 #    StartServers             5
