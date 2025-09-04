@@ -81,6 +81,9 @@ RUN rc-update add cronie
 RUN mkdir /etc/periodic/1min && echo -e "*\t*\t*\t*\t*\trun-parts /etc/periodic/1min" >> /var/spool/cron/crontabs/root
 RUN mkdir /etc/periodic/5min && echo -e "*/5\t*\t*\t*\t*\trun-parts /etc/periodic/5min" >> /var/spool/cron/crontabs/root
 
+ADD offline_jobs.sh /etc/periodic/5min
+RUN chmod +x /etc/periodic/1min/offline_jobs.sh
+
 ADD cronjob /etc/periodic/daily/resourcespace
 RUN chmod +x /etc/periodic/daily/resourcespace
 
@@ -97,9 +100,12 @@ ADD 1.jpg /tmp
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-RUN touch /var/log/apache2/access.log /var/log/apache2/error.log
+RUN touch \
+    /var/log/apache2/access.log \
+    /var/log/apache2/error.log \
+    /var/log/offline_jobs.log
 
 # Start both cron and Apache
-CMD dockerize -stdout /var/log/apache2/access.log -stderr /var/log/apache2/error.log -poll /entrypoint.sh
+CMD dockerize -stdout /var/log/apache2/access.log -stdout /var/log/offline_jobs.log -stderr /var/log/apache2/error.log -poll /entrypoint.sh
 
 EXPOSE 80
