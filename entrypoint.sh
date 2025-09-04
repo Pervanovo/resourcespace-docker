@@ -1,7 +1,14 @@
 #!/bin/ash
 
+printenv | grep -v "no_proxy" >> /etc/environment
+
+# Start syslog
+rc-service syslog start > /dev/null
+rc-status | grep syslog
+
 # Start cron service
-rc-service crond start
+rc-service cronie start > /dev/null
+rc-status | grep cronie
 
 # Start Apache in the foreground (keeps the container alive)
 #apachectl -D FOREGROUND
