@@ -40,8 +40,8 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         context: .
-        cache-from: gha
-        cache-to: gha
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
         file: ./Dockerfile
         push: true
         tags: |
