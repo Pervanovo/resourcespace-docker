@@ -91,7 +91,7 @@ ADD config.php /var/www/html/include/config.php
 
 # FIXME old version, but stdout option has been broken ever since...
 ENV DOCKERIZE_VERSION="v0.6.1"
-RUN wget -O - https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz | tar xzf - -C /usr/local/bin
+RUN wget -q -O - https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz | tar xzf - -C /usr/local/bin
 
 # add slideshow image to be copied by the entrypoint
 ADD 1.jpg /tmp
