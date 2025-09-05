@@ -17,6 +17,7 @@ RUN apk add --no-cache \
     poppler-utils \
     postfix \
     wget \
+    moreutils \
     mysql-client \
     exiftool \
     ffmpeg \
