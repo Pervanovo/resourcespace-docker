@@ -2,13 +2,24 @@
 
 printenv | grep -v "no_proxy" >> /etc/environment
 
+rc-update add ntpd default
+rc-update add syslog default
+rc-update add cronie default
+rc-status -a
+
+# Start ntpd
+service ntpd start
+rc-status | grep ntpd
+
 # Start syslog
-rc-service syslog start > /dev/null
+rc-service syslog start
 rc-status | grep syslog
 
 # Start cron service
-rc-service cronie start > /dev/null
+rc-service cronie start
 rc-status | grep cronie
+
+rc-status -a
 
 # Start Apache in the foreground (keeps the container alive)
 #apachectl -D FOREGROUND
@@ -37,7 +48,9 @@ sed -i -e "s/MaxSpareServers\s\+\d\+/MaxSpareServers ${MAX_SS}/g" /etc/apache2/c
 MAX_RW="${HTTPD_MAX_REQUEST_WORKERS:-250}"
 sed -i -e "s/MaxRequestWorkers\s\+\d\+/MaxRequestWorkers ${MAX_RW}/g" /etc/apache2/conf.d/mpm.conf
 
-cat /etc/apache2/conf.d/mpm.conf
+if [[ ! -z "${VERBOSE_START}" ]]; then
+  cat /etc/apache2/conf.d/mpm.conf
+fi
 
 if [[ ! -z "${ULIMIT}" ]]; then
   ulimit -m ${ULIMIT} -v ${ULIMIT}
