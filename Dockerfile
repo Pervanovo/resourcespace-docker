@@ -5,7 +5,6 @@ LABEL org.opencontainers.image.authors="Montala Ltd"
 ENV DEBIAN_FRONTEND="noninteractive"
 
 RUN apk add --no-cache \
-    busybox-openrc \
     cronie \
     vim \
     less \
@@ -71,13 +70,6 @@ RUN printf '<Directory /var/www/>\n\
 
 RUN sed -i -e "s/\/var\/www\/localhost\/htdocs/\/var\/www\/html/g" /etc/apache2/httpd.conf
 RUN sed -i -e "s/Options Indexes FollowSymLinks/Options -Indexes +FollowSymLinks/g" /etc/apache2/httpd.conf
-
-RUN mkdir -p /run/openrc && touch /run/openrc/softlevel
-
-RUN #rc-update add syslog
-ADD syslog.conf /etc
-
-RUN #rc-update add cronie
 
 RUN mkdir /etc/periodic/1min && echo -e "*\t*\t*\t*\t*\trun-parts /etc/periodic/1min" >> /var/spool/cron/crontabs/root
 RUN mkdir /etc/periodic/5min && echo -e "*/5\t*\t*\t*\t*\trun-parts /etc/periodic/5min" >> /var/spool/cron/crontabs/root

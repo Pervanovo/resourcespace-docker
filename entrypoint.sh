@@ -2,25 +2,6 @@
 
 printenv | grep -v "no_proxy" >> /etc/environment
 
-rc-update add ntpd default
-rc-update add syslog default
-rc-update add cronie default
-rc-status -a
-
-# Start ntpd
-service ntpd start
-rc-status | grep ntpd
-
-# Start syslog
-rc-service syslog start
-rc-status | grep syslog
-
-# Start cron service
-rc-service cronie start
-rc-status | grep cronie
-
-rc-status -a
-
 if [[ ! -z "${TAKE_CONTROL_OVER_FILESTORE_ON_START}" ]]; then
   mkdir -p /var/www/html/filestore/system/slideshow
   chown -R apache:apache /var/www/html/filestore/system
@@ -56,4 +37,5 @@ if [[ ! -z "${ULIMIT}" ]]; then
   ulimit -a
 fi
 
+crond
 httpd -DFOREGROUND
