@@ -121,8 +121,10 @@ if (getenv('ALLOWED_EXTERNAL_SHARE_GROUPS')) {
 /* requires $enable_related_resources=true */
 /* $php_path MUST BE SET */
 $relate_on_upload = true;
+
+$show_detailed_errors = true;
+
 if (getenv('DEBUG')) {
-    $show_detailed_errors = true;
     $debug_extended_info = true;
     $debug_log = true;
     $debug_log_location = "/var/log/apache2/error.log";
