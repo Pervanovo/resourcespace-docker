@@ -127,3 +127,4 @@ if (getenv('UPPY_COMPANION_URL')) {
 }
 
 $offline_job_queue = true;
+$tempdir = '/tmp/resourcespace';
