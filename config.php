@@ -139,4 +139,7 @@ if (getenv('UPPY_COMPANION_URL')) {
 }
 
 $offline_job_queue = true;
+
+// Optional folder to use for temporary file storage.
+// If using a remote filestore for resources e.g. a NAS this should be added to point to a local drive with fast disk access
 $tempdir = '/tmp/resourcespace';
