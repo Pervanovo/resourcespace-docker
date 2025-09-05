@@ -143,3 +143,9 @@ $offline_job_queue = true;
 // Optional folder to use for temporary file storage.
 // If using a remote filestore for resources e.g. a NAS this should be added to point to a local drive with fast disk access
 $tempdir = '/tmp/resourcespace';
+
+if (getenv('UPLOAD_DISK_QUOTA_WARNING')) {
+    // GB of disk space left before uploads are disabled.
+    // This causes disk space to be checked before each upload attempt
+    $disk_quota_limit_size_warning_noupload = intval(getenv('UPLOAD_DISK_QUOTA_WARNING'));
+}
