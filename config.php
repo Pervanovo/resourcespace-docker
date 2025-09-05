@@ -40,6 +40,7 @@ $scramble_key = getenv('SCRAMBLE_KEY');
 $api_scramble_key = getenv('API_SCRAMBLE_KEY');
 
 # Paths
+$php_path = '/usr/bin';
 $imagemagick_path = '/usr/bin';
 $ghostscript_path = '/usr/bin';
 $ffmpeg_path = '/usr/bin';
@@ -104,6 +105,9 @@ $plugins[] = "brand_guidelines";
 if (getenv('ALLOWED_EXTERNAL_SHARE_GROUPS')) {
     $allowed_external_share_groups = explode(",", getenv('ALLOWED_EXTERNAL_SHARE_GROUPS'));
 }
+// Adds an option to the upload page which allows Resources Uploaded together to all be related
+/* requires $enable_related_resources=true */
+/* $php_path MUST BE SET */
 $relate_on_upload = true;
 if (getenv('DEBUG')) {
     $show_detailed_errors = true;
