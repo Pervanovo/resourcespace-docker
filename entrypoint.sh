@@ -21,14 +21,13 @@ rc-status | grep cronie
 
 rc-status -a
 
-# Start Apache in the foreground (keeps the container alive)
-#apachectl -D FOREGROUND
-
-mkdir -p /var/www/html/filestore/system/slideshow
-chown -R apache:apache /var/www/html/filestore/system
-chmod -R 777 /var/www/html/filestore/system
-cp /tmp/1.jpg /var/www/html/filestore/system/slideshow
-chown apache:apache /var/www/html/filestore/system/slideshow/1.jpg
+if [[ ! -z "${TAKE_CONTROL_OVER_FILESTORE_ON_START}" ]]; then
+  mkdir -p /var/www/html/filestore/system/slideshow
+  chown -R apache:apache /var/www/html/filestore/system
+  chmod -R 777 /var/www/html/filestore/system
+  cp /tmp/1.jpg /var/www/html/filestore/system/slideshow
+  chown apache:apache /var/www/html/filestore/system/slideshow/1.jpg
+fi
 
 #<IfModule mpm_prefork_module>
 #    StartServers             5
