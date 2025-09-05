@@ -41,7 +41,7 @@ RUN apk add --no-cache \
     php83-iconv
 
 RUN apk add gnu-libiconv=1.15-r3 --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.13/community/ --allow-untrusted
-ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so
+ENV LD_PRELOAD="/usr/lib/preloadable_libiconv.so"
 
 RUN apk --no-cache add shadow && \
     groupmod --gid 33 www-data && \
@@ -73,10 +73,10 @@ RUN sed -i -e "s/Options Indexes FollowSymLinks/Options -Indexes +FollowSymLinks
 
 RUN mkdir -p /run/openrc && touch /run/openrc/softlevel
 
-RUN rc-update add syslog
+RUN #rc-update add syslog
 ADD syslog.conf /etc
 
-RUN rc-update add cronie
+RUN #rc-update add cronie
 
 RUN mkdir /etc/periodic/1min && echo -e "*\t*\t*\t*\t*\trun-parts /etc/periodic/1min" >> /var/spool/cron/crontabs/root
 RUN mkdir /etc/periodic/5min && echo -e "*/5\t*\t*\t*\t*\trun-parts /etc/periodic/5min" >> /var/spool/cron/crontabs/root
@@ -90,7 +90,7 @@ RUN chmod +x /etc/periodic/daily/resourcespace
 ADD config.php /var/www/html/include/config.php
 
 # FIXME old version, but stdout option has been broken ever since...
-ENV DOCKERIZE_VERSION v0.6.1
+ENV DOCKERIZE_VERSION="v0.6.1"
 RUN wget -O - https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz | tar xzf - -C /usr/local/bin
 
 # add slideshow image to be copied by the entrypoint
@@ -106,6 +106,6 @@ RUN touch \
     /var/log/offline_jobs.log
 
 # Start both cron and Apache
-CMD dockerize -stdout /var/log/apache2/access.log -stdout /var/log/offline_jobs.log -stderr /var/log/apache2/error.log -poll /entrypoint.sh
+CMD ["dockerize", "-stdout", "/var/log/apache2/access.log", "-stdout", "/var/log/offline_jobs.log", "-stderr", "/var/log/apache2/error.log", "-poll", "/entrypoint.sh"]
 
 EXPOSE 80
