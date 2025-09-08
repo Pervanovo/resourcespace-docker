@@ -151,3 +151,7 @@ if (getenv('UPLOAD_DISK_QUOTA_WARNING')) {
     // This causes disk space to be checked before each upload attempt
     $disk_quota_limit_size_warning_noupload = intval(getenv('UPLOAD_DISK_QUOTA_WARNING'));
 }
+
+if (getenv('UPLOAD_CONCURRENT_LIMIT')) {
+    $upload_concurrent_limit = intval(getenv('UPLOAD_CONCURRENT_LIMIT'));
+}
