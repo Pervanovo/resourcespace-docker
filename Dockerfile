@@ -75,8 +75,8 @@ RUN echo "ServerName localhost" >> /etc/apache2/httpd.conf
 RUN mkdir /etc/periodic/1min && echo -e "*\t*\t*\t*\t*\trun-parts /etc/periodic/1min" >> /var/spool/cron/crontabs/root
 RUN mkdir /etc/periodic/5min && echo -e "*/5\t*\t*\t*\t*\trun-parts /etc/periodic/5min" >> /var/spool/cron/crontabs/root
 
-ADD offline_jobs.sh /etc/periodic/5min
-RUN chmod +x /etc/periodic/5min/offline_jobs.sh
+ADD offline_jobs.sh /etc/periodic/1min
+RUN chmod +x /etc/periodic/1min/offline_jobs.sh
 
 ADD cronjob /etc/periodic/daily/resourcespace
 RUN chmod +x /etc/periodic/daily/resourcespace
