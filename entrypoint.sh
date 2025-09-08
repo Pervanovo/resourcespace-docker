@@ -37,5 +37,8 @@ if [[ ! -z "${ULIMIT}" ]]; then
   ulimit -a
 fi
 
+# print imagick limits
+identify -list resource
+
 crond
 httpd -DFOREGROUND
