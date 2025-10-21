@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.22.2
 
 LABEL org.opencontainers.image.authors="Montala Ltd"
 
