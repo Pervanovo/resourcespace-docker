@@ -89,6 +89,7 @@ RUN wget -q -O - https://github.com/jwilder/dockerize/releases/download/$DOCKERI
 
 # add slideshow image to be copied by the entrypoint
 ADD 1.jpg /tmp
+RUN mkdir /tmp/resourcespace && chown -R apache:apache /tmp/resourcespace
 
 # Copy custom entrypoint script
 COPY entrypoint.sh /entrypoint.sh
