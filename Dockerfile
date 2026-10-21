@@ -1,4 +1,4 @@
-FROM alpine:edge AS iconv-builder
+FROM alpine:3.24.2 AS iconv-builder
 
 RUN apk add --no-cache \
     php83 \
@@ -30,7 +30,7 @@ RUN phpize83 \
     && make -j"$(nproc)" \
     && install -Dm755 modules/iconv.so /out/iconv.so
 
-FROM alpine:edge
+FROM alpine:3.24.2
 
 LABEL org.opencontainers.image.authors="Montala Ltd"
 
