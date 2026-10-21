@@ -1,4 +1,36 @@
-FROM alpine:3.22.2
+FROM alpine:edge AS iconv-builder
+
+RUN apk add --no-cache \
+    php83 \
+    php83-dev \
+    php83-iconv \
+    gnu-libiconv-dev \
+    build-base \
+    curl
+
+# Prefer GNU libiconv headers
+RUN cp /usr/include/gnu-libiconv/iconv.h /usr/include/iconv.h
+
+WORKDIR /tmp
+
+# Download sources matching the installed PHP version
+RUN PHPVER="$(php83 -r 'echo PHP_VERSION;')" \
+    && curl -fsSL \
+       "https://www.php.net/distributions/php-${PHPVER}.tar.gz" \
+       -o php.tar.gz \
+    && tar xzf php.tar.gz \
+    && ln -s "/tmp/php-${PHPVER}/ext/iconv" /tmp/iconv-src
+
+WORKDIR /tmp/iconv-src
+
+RUN phpize83 \
+    && LIBS="-liconv" ./configure \
+       --with-php-config=/usr/bin/php-config83 \
+       --with-iconv=/usr \
+    && make -j"$(nproc)" \
+    && install -Dm755 modules/iconv.so /out/iconv.so
+
+FROM alpine:edge
 
 LABEL org.opencontainers.image.authors="Montala Ltd"
 
@@ -21,11 +53,12 @@ RUN apk add --no-cache \
     exiftool \
     ffmpeg \
     python3 \
+    gnu-libiconv-libs \
     py3-pip
 #perl-image-exiftool
 RUN apk add --no-cache \
     php83 \
-    php83-apcu \
+    php83-pecl-apcu \
     php83-curl \
     php83-dev \
     php83-gd \
@@ -40,8 +73,9 @@ RUN apk add --no-cache \
     php83-xml \
     php83-iconv
 
-RUN apk add gnu-libiconv=1.15-r3 --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.13/community/ --allow-untrusted
-ENV LD_PRELOAD="/usr/lib/preloadable_libiconv.so"
+COPY --from=iconv-builder \
+    /out/iconv.so \
+    /usr/lib/php83/modules/iconv.so
 
 RUN apk --no-cache add shadow && \
     groupmod --gid 33 www-data && \
