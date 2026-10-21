@@ -73,6 +73,8 @@ RUN apk add --no-cache \
     php83-xml \
     php83-iconv
 
+RUN ln -s /usr/bin/php83 /usr/bin/php
+
 COPY --from=iconv-builder \
     /out/iconv.so \
     /usr/lib/php83/modules/iconv.so
